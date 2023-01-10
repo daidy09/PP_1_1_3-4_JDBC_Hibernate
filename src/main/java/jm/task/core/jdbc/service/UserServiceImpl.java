@@ -25,17 +25,21 @@ public class UserServiceImpl implements UserService {
     }
 
     public void saveUser(String name, String lastName, byte age) {
+//        user.setName(name);
+//        user.setLastName(lastName);
+//        user.setAge(age);
         userDaoJDBC.saveUser(user.getName(), user.getLastName(), user.getAge());
 
     }
 
     public void removeUserById(long id) throws SQLException, ClassNotFoundException {
+//        user.setId(id);
         userDaoJDBC.removeUserById(user.getId());
 
     }
 
-    public List<User> getAllUsers() {
-        return null;
+    public List<User> getAllUsers() throws SQLException {
+        return userDaoJDBC.getAllUsers();
     }
 
     public void cleanUsersTable() {
