@@ -14,7 +14,7 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl() throws SQLException, ClassNotFoundException {
     }
 
-    public void createUsersTable() {
+    public void createUsersTable() throws SQLException, ClassNotFoundException {
         userDaoJDBC.createUsersTable();
 
     }
