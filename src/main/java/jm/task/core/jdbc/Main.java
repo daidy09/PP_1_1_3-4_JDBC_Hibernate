@@ -13,16 +13,17 @@ public class Main {
 
         // реализуйте алгоритм здесь
         UserDao userDao = new UserDaoJDBCImpl();
-        userDao.cleanUsersTable();
-        userDao.saveUser("Vasil", "Vasiliev", (byte) 37);
-        userDao.saveUser("Ivan", "Ivanov", (byte) 23);
-        userDao.saveUser("Petr", "Petrov", (byte) 18);
-        userDao.saveUser("Stepan", "Stepanov", (byte) 29);
+//        userDao.cleanUsersTable();
+//        userDao.saveUser("Vasil", "Vasiliev", (byte) 37);
+//        userDao.saveUser("Ivan", "Ivanov", (byte) 23);
+//        userDao.saveUser("Petr", "Petrov", (byte) 18);
+//        userDao.saveUser("Stepan", "Stepanov", (byte) 29);
+        userDao.createUsersTable();
 
-        userDao.getAllUsers();
-        userDao.cleanUsersTable();
-        userDao.dropUsersTable();
-
+//        userDao.getAllUsers();
+//        userDao.cleanUsersTable();
+//        userDao.dropUsersTable();
+//
 
 
     }
