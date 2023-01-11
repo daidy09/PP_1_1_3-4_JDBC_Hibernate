@@ -19,10 +19,15 @@ public class Util {
     public Util() throws SQLException, ClassNotFoundException {
     }
 
-    public static Connection getConnection() throws ClassNotFoundException, SQLException {
-
+    public static Connection getConnection() throws ClassNotFoundException {
+        Connection connection = null;
         Class.forName(DRIVER);//получаем конкретный драйвер
-        return DriverManager.getConnection(URL,USER,PASSWORD);//создаем физический коннекшн
+        try {
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return connection;
 
     }
 

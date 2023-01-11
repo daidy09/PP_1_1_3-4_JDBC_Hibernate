@@ -24,7 +24,7 @@ public class User {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{id: " + id
+        return  "User + {id: " + id
                 + "userName: " + name
                 + "userLastName: " + lastName
                 + "userAge: " + age

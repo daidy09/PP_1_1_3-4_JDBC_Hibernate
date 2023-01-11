@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    private Connection connection = Util.getConnection();
+    public Connection connection = Util.getConnection();
 
     public UserDaoJDBCImpl() throws SQLException, ClassNotFoundException {}
-    public void createUsersTable() {
+    public void createUsersTable() throws SQLException {
 
         String createTable = "CREATE TABLE IF NOT EXISTS users("
                 + "id BIGINT NOT NULL AUTO_INCREMENT, "
@@ -24,54 +24,46 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = connection.createStatement()) {
             //на созданном стэйтменте вызываем запрос
             statement.execute(createTable);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
 
-    public void dropUsersTable() {
+    public void dropUsersTable() throws SQLException {
 
-        String dropTable = "DROP TABLE IF EXISTS users;";
+        String dropTable = "DROP TABLE IF EXISTS users";
 
         try (Statement statement = connection.createStatement()) {
                 //на созданном стэйтменте вызываем запрос
             statement.executeUpdate(dropTable);
-        }catch (SQLException e) {
-            throw new RuntimeException(e);
         }
 
     }
 
-    public void saveUser(String name, String lastName, byte age) {
+    public void saveUser(String name, String lastName, byte age) throws SQLException {
 
-//        String insertIntoTable = "INSERT INTO users(name, lastName, age) VALUES ('name', 'lastName', age)";
+ //       String insertIntoTable = "INSERT INTO users(name, lastName, age) VALUES ('name', 'lastName', age)";
         String insertIntoTable = "INSERT INTO users(name, lastName, age) VALUES (?, ?, ?)";
 
-        try (Statement statement = connection.createStatement()) {
+        try (PreparedStatement preparedStatement=connection.prepareStatement(insertIntoTable)) {
             //на созданном стэйтменте вызываем запрос
-
-            User user = new User();
-            user.setName(name);
-            user.setLastName(lastName);
-            user.setAge(age);
-            statement.executeUpdate(insertIntoTable);
-
-            System.out.println("User  с именем- " + user.getName() + "добавлен в базу данных");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setByte(3, age);
+            preparedStatement.executeUpdate();
+            System.out.println("User  с именем- " + name + "добавлен в базу данных");
         }
+
     }
 
     public void removeUserById(long id) throws ClassNotFoundException, SQLException {
 
-        String deleteFromTable = "DELETE FROM users WHERE id = ?;";
+        String deleteFromTable = "DELETE FROM users WHERE id = ?";
 
-        try (Statement statement = connection.createStatement()) {
+       try (PreparedStatement preparedStatement=connection.prepareStatement(deleteFromTable)) {
             //на созданном стэйтменте вызываем запрос
-            statement.executeUpdate(deleteFromTable);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+
         }
     }
 
@@ -80,11 +72,12 @@ public class UserDaoJDBCImpl implements UserDao {
         String allUsers = "SELECT id, name, lastName, age FROM users;";
 
         ResultSet resultSet;
-        try (Statement statement = connection.createStatement()) {
+//        try (Statement statement = connection.createStatement()) {
+//            //на созданном стэйтменте вызываем запрос
+//            resultSet = statement.executeQuery(allUsers);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(allUsers)) {
             //на созданном стэйтменте вызываем запрос
-            resultSet = statement.executeQuery(allUsers);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            resultSet = preparedStatement.executeQuery();
         }
         //создаю лист юзеров
         List<User> userList = new ArrayList<>();
@@ -102,16 +95,14 @@ public class UserDaoJDBCImpl implements UserDao {
 
         return userList;
     }
+//
+    public void cleanUsersTable() throws SQLException {
 
-    public void cleanUsersTable() {
-
-        String cleanUsers = "TRUNCATE TABLE users;";
+        String cleanUsers = "TRUNCATE TABLE users";
 
         try (Statement statement = connection.createStatement()) {
             //на созданном стэйтменте вызываем запрос
             statement.executeUpdate(cleanUsers);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
         }
 
     }

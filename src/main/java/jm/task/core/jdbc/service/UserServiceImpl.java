@@ -8,41 +8,37 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
     private UserDaoJDBCImpl userDaoJDBC = new UserDaoJDBCImpl();
-    private User user = new User();
-
 
     public UserServiceImpl() throws SQLException, ClassNotFoundException {
     }
+
+//    public UserServiceImpl() throws SQLException, ClassNotFoundException {
+//    }
 
     public void createUsersTable() throws SQLException, ClassNotFoundException {
         userDaoJDBC.createUsersTable();
 
     }
 
-    public void dropUsersTable() {
+    public void dropUsersTable() throws SQLException {
         userDaoJDBC.dropUsersTable();
 
     }
 
-    public void saveUser(String name, String lastName, byte age) {
-//        user.setName(name);
-//        user.setLastName(lastName);
-//        user.setAge(age);
-        userDaoJDBC.saveUser(user.getName(), user.getLastName(), user.getAge());
+    public void saveUser(String name, String lastName, byte age) throws SQLException {
+        userDaoJDBC.saveUser(name, lastName, age);
 
     }
 
     public void removeUserById(long id) throws SQLException, ClassNotFoundException {
-//        user.setId(id);
-        userDaoJDBC.removeUserById(user.getId());
-
+        userDaoJDBC.removeUserById(id);
     }
 
-    public List<User> getAllUsers() throws SQLException {
+    public List<User> getAllUsers() throws SQLException, ClassNotFoundException {
         return userDaoJDBC.getAllUsers();
     }
 
-    public void cleanUsersTable() {
+    public void cleanUsersTable() throws SQLException {
         userDaoJDBC.cleanUsersTable();
 
     }
