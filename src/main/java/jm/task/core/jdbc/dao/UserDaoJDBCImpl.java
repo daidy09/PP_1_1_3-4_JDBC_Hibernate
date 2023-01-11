@@ -14,12 +14,10 @@ public class UserDaoJDBCImpl implements UserDao {
     public void createUsersTable() {
 
         String createTable = "CREATE TABLE IF NOT EXISTS users("
-                + "id BIGINT NOT NULL AUTO_INCREMENT, "
+                + "id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY , "
                 + "name VARCHAR(255) NOT NULL, "
                 + "lastName VARCHAR(255) NOT NULL, "
-                + "age INT NOT NULL, "
-                + "PRIMARY KEY (id)"
-                + ")";
+                + "age TINYINT UNSIGNED);";
 
         try (Statement statement = Util.getConnection().createStatement()) {
             //на созданном стэйтменте вызываем запрос
@@ -80,17 +78,15 @@ public class UserDaoJDBCImpl implements UserDao {
     public List<User> getAllUsers() {
 
         String allUsers = "SELECT id, name, lastName, age FROM users;";
-
-        ResultSet resultSet;
+        List<User> userList = new ArrayList<>();
+//
 //        try (Statement statement = connection.createStatement()) {
 //            //на созданном стэйтменте вызываем запрос
 //            resultSet = statement.executeQuery(allUsers);
         try (PreparedStatement preparedStatement = Util.getConnection().prepareStatement(allUsers)) {
             //на созданном стэйтменте вызываем запрос
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            //создаю лист юзеров
-            List<User> userList = new ArrayList<>();
             //прохожу по всем ячейкам
             while (resultSet.next()) {
                 //создаю юзера и присваиваю инфу, что получили через резалтсет
@@ -101,13 +97,13 @@ public class UserDaoJDBCImpl implements UserDao {
                 user.setAge(resultSet.getByte("age"));
                 userList.add(user);
                 System.out.println(user);
-            } return userList;
+            }
         }catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            System.out.println("User не  удален");}
+            System.out.println("User не  удален");
+        }
 
-
-        return null;
+        return userList;
     }
 //
     public void cleanUsersTable() {
@@ -119,7 +115,8 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.executeUpdate(cleanUsers);
         }catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            System.out.println("таблица не очищена");}
+            System.out.println("таблица не очищена");
+        }
 
     }
 }
