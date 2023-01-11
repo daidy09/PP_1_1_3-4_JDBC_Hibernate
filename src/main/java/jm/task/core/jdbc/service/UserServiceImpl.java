@@ -2,18 +2,16 @@ package jm.task.core.jdbc.service;
 
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
+import jm.task.core.jdbc.util.Util;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends Util implements UserService {
     private UserDaoJDBCImpl userDaoJDBC = new UserDaoJDBCImpl();
 
     public UserServiceImpl() throws SQLException, ClassNotFoundException {
     }
-
-//    public UserServiceImpl() throws SQLException, ClassNotFoundException {
-//    }
 
     public void createUsersTable() throws SQLException, ClassNotFoundException {
         userDaoJDBC.createUsersTable();
