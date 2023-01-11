@@ -24,8 +24,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = connection.createStatement()) {
             //на созданном стэйтменте вызываем запрос
             statement.execute(createTable);
-            connection.setAutoCommit(false);
-            connection.commit();
+
         }
     }
 
@@ -37,8 +36,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = connection.createStatement()) {
                 //на созданном стэйтменте вызываем запрос
             statement.executeUpdate(dropTable);
-            connection.setAutoCommit(false);
-            connection.commit();
+
         }
 
     }
@@ -57,8 +55,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.executeUpdate();
 
             System.out.println("User  с именем- " + name + "добавлен в базу данных");
-            connection.setAutoCommit(false);
-            connection.commit();
+
 
         }
 
@@ -72,9 +69,6 @@ public class UserDaoJDBCImpl implements UserDao {
             //на созданном стэйтменте вызываем запрос
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
-           connection.setAutoCommit(false);
-           connection.commit();
-
 
        }
     }
@@ -103,8 +97,6 @@ public class UserDaoJDBCImpl implements UserDao {
             user.setAge(resultSet.getByte("age"));
             userList.add(user);
             System.out.println(user);
-            connection.setAutoCommit(false);
-            connection.commit();
 
         }
 
@@ -118,8 +110,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = connection.createStatement()) {
             //на созданном стэйтменте вызываем запрос
             statement.executeUpdate(cleanUsers);
-            connection.setAutoCommit(false);
-            connection.commit();
+
         }
 
     }
