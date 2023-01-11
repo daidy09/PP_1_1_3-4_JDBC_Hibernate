@@ -1,15 +1,10 @@
 package jm.task.core.jdbc;
-
-import jm.task.core.jdbc.dao.UserDao;
-import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.service.UserServiceImpl;
 
 
-import java.sql.SQLException;
-
 
 public class Main {
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+    public static void main(String[] args) {
         UserServiceImpl userService = new UserServiceImpl();
         userService.createUsersTable();
         userService.saveUser("Vasil", "Vasiliev", (byte) 37);

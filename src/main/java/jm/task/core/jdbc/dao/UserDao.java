@@ -6,15 +6,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface UserDao {
-    void createUsersTable() throws ClassNotFoundException, SQLException;
+    void createUsersTable() ;
 
-    void dropUsersTable() throws SQLException, ClassNotFoundException;
+    void dropUsersTable() ;
 
-    void saveUser(String name, String lastName, byte age) throws SQLException, ClassNotFoundException;
+    void saveUser(String name, String lastName, byte age);
 
-    void removeUserById(long id) throws ClassNotFoundException, SQLException;
+    void removeUserById(long id);
 
-    List<User> getAllUsers() throws ClassNotFoundException, SQLException;
+    List<User> getAllUsers();
 
-    void cleanUsersTable() throws ClassNotFoundException, SQLException;
+    void cleanUsersTable();
 }
