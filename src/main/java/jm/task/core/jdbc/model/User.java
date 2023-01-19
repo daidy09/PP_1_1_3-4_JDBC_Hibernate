@@ -19,7 +19,6 @@ public class User {
     private Byte age;
 
     public User() {
-
     }
 
     @Override
@@ -69,6 +68,4 @@ public class User {
     public void setAge(Byte age) {
         this.age = age;
     }
-
-
 }
